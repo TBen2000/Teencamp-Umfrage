@@ -22,7 +22,7 @@ def would_likely_drop_out(df: pd.DataFrame) -> pd.Series:
     nicht mehr mitkommen":
 
       - week4_plus5_fit in {1, 2}
-      - UND week4_fit >= week4_plus5_fit + 1
+      - UND week4_fit >= week4_plus5_fit + 2
       - UND attend_anyway NICHT in {4, 5}  (d.h. in {1, 2, 3})
     """
     if df.empty:
@@ -30,7 +30,7 @@ def would_likely_drop_out(df: pd.DataFrame) -> pd.Series:
 
     cond = (
         df["week4_plus5_fit"].isin([1, 2])
-        & (df["week4_fit"] >= df["week4_plus5_fit"] + 1)
+        & (df["week4_fit"] >= df["week4_plus5_fit"] + 2)
         & (~df["attend_anyway"].isin([4, 5]))
     )
     return cond.fillna(False)
@@ -39,8 +39,8 @@ def would_likely_drop_out(df: pd.DataFrame) -> pd.Series:
 DROPOUT_EXPLANATION = (
     "Als 'höchstwahrscheinlich nicht mehr mitkommend' gelten Personen, die die "
     "Verschiebung um 5 Tage schlecht bewerten (1-2 Punkte), gleichzeitig die "
-    "aktuelle 4. Woche spürbar besser bewerten (mindestens 1 Punkt höher) "
-    "UND nicht angegeben haben, sowieso auf jeden Fall dabei zu sein "
+    "aktuelle 4. Woche spürbar besser bewerten (mindestens 2 Punkte höher) "
+    "und nicht angegeben haben, sowieso auf jeden Fall dabei zu sein "
     "(Zustimmung 4-5 bei dieser Frage schließt sie aus)."
 )
 
